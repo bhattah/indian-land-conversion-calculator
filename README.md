@@ -1,1 +1,1 @@
-Land area conversion calculator in Vernacular indian units.
+Land area conversion calculator in vernacular Indian units.
