@@ -1,0 +1,162 @@
+<html>
+  <body>
+    <h1 style="font-size: 24px;">Land Conversion Calculator</h1>
+    <p style="font-size: 18px;">Conversion Formulae:</p>
+    <ul style="font-size: 18px;">
+      <li><input type="text" id="formula1" value="3 square foot = 1 gaj"><button onclick="resetFormula1(); return false;">Reset</button></li>
+      <li><input type="text" id="formula2" value="180 gaj = 1 nali"><button onclick="resetFormula2(); return false;">Reset</button></li>
+      <li><input type="text" id="formula3" value="10 nali = 1 bigha"><button onclick="resetFormula3(); return false;">Reset</button></li>
+    </ul>
+    <form style="text-align: center; font-size: 18px;">
+      <label for="value">Value:</label>
+      <input type="number" id="value" value="0">
+      <label for="from">From:</label>
+      <select id="from">
+        <option value="squarefoot">Square Foot</option>
+        <option value="gaj">Gaj</option>
+        <option value="nali">Nali</option>
+        <option value="bigha">Bigha</option>
+      </select>
+      <label for="to">To:</label>
+      <select id="to">
+        <option value="squarefoot">Square Foot</option>
+        <option value="gaj">Gaj</option>
+        <option value="nali">Nali</option>
+        <option value="bigha">Bigha</option>
+      </select>
+      <button onclick="convert(); return false;">Convert</button>
+      <p id="result" style="font-size: 18px;"></p>
+    </form>
+
+    <h1 style="font-size: 24px;">Pocket Calculator</h1>
+    <table style="border: 1px solid black; border-collapse: collapse; width: 200px;">
+      <tr>
+        <td colspan="4"><input type="text" id="display" value="0" style="width: 100%; text-align: right;"></td>
+      </tr>
+      <tr>
+        <td><button onclick="append('7'); return false;">7</button></td>
+        <td><button onclick="append('8'); return false;">8</button></td>
+        <td><button onclick="append('9'); return false;">9</button></td>
+        <td><button onclick="append('/'); return false;">/</button></td>
+      </tr>
+      <tr>
+        <td><button onclick="append('4'); return false;">4</button></td>
+        <td><button onclick="append('5'); return false;">5</button></td>
+        <td><button onclick="append('6'); return false;">6</button></td>
+        <td><button onclick="append('*'); return false;">*</button></td>
+      </tr>
+      <tr>
+        <td><button onclick="append('1'); return false;">1</button></td>
+        <td><button onclick="append('2'); return false;">2</button></td>
+        <td><button onclick="append('3'); return false;">3</button></td>
+        <td><button onclick="append('-'); return false;">-</button></td>
+      </tr>
+      <tr>
+        <td><button onclick="append('0'); return false;">0</button></td>
+        <td><button onclick="append('.'); return false;">.</button></td>
+        <td><button onclick="append('='); return false;">=</button></td>
+        <td><button onclick="append('+'); return false;">+</button></td>
+      </tr>
+      <tr>
+        <td colspan="4"><button onclick="clearDisplay(); return false;">Clear</button></td>
+      </tr>
+    </table>
+
+    <script>
+      function convert() {
+        let value = parseFloat(document.getElementById("value").value);
+        let from = document.getElementById("from").value;
+        let to = document.getElementById("to").value;
+        let formula1 = document.getElementById("formula1").value;
+        let formula2 = document.getElementById("formula2").value;
+        let formula3 = document.getElementById("formula3").value;
+        let result;
+
+        let squarefootToGaj = parseFloat(formula1.split("=")[0].trim().split(" ")[0]);
+        let gajToNali = parseFloat(formula2.split("=")[0].trim().split(" ")[0]);
+        let naliToBigha = parseFloat(formula3.split("=")[0].trim().split(" ")[0]);
+
+        if (from === "squarefoot") {
+          if (to === "gaj") {
+            result = value / squarefootToGaj;
+          } else if (to === "nali") {
+            result = value / (squarefootToGaj * gajToNali);
+          } else if (to === "bigha") {
+            result = value / (squarefootToGaj * gajToNali * naliToBigha);
+          } else {
+            result = value;
+          }
+        } else if (from === "gaj") {
+          if (to === "squarefoot") {
+            result = value * squarefootToGaj;
+          } else if (to === "nali") {
+            result = value / gajToNali;
+          } else if (to === "bigha") {
+            result = value / (gajToNali * naliToBigha);
+          } else {
+            result = value;
+          }
+        } else if (from === "nali") {
+          if (to === "squarefoot") {
+            result = value * squarefootToGaj * gajToNali;
+          } else if (to === "gaj") {
+            result = value * gajToNali;
+          } else if (to === "bigha") {
+            result = value / naliToBigha;
+          } else {
+            result = value;
+          }
+        } else if (from === "bigha") {
+          if (to === "squarefoot") {
+            result = value * squarefootToGaj * gajToNali * naliToBigha;
+          } else if (to === "gaj") {
+            result = value * gajToNali * naliToBigha;
+          } else if (to === "nali") {
+            result = value * naliToBigha;
+          } else {
+            result = value;
+          }
+        }
+
+        document.getElementById("result").innerHTML = "Result: " + result + " " + to;
+      }
+
+      let displayValue = "0";
+      let operator = "";
+
+      function append(char) {
+        if (char === "=") {
+          let result = eval(displayValue);
+          displayValue = result.toString();
+        } else if (char === "C") {
+          displayValue = "0";
+        } else {
+          if (displayValue === "0") {
+            displayValue = char;
+          } else {
+            displayValue += char;
+          }
+        }
+        document.getElementById("display").value = displayValue;
+      }
+
+      function clearDisplay() {
+        displayValue = "0";
+        document.getElementById("display").value = displayValue;
+      }
+
+      function resetFormula1() {
+        document.getElementById("formula1").value = "3 square foot = 1 gaj";
+      }
+
+      function resetFormula2() {
+        document.getElementById("formula2").value = "180 gaj = 1 nali";
+      }
+
+      function resetFormula3() {
+        document.getElementById("formula3").value = "10 nali = 1 bigha";
+      }
+    </script>
+  </body>
+</html>
+
