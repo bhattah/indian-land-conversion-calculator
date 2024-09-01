@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>Indian Land Converter</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -39,6 +41,12 @@
     <label>1 Bigha = <input type="number" id="bigha-nali" value="10"> Nali<br></label>
     <label>1 Nali = <input type="number" id="nali-gaj" value="180"> Gaj<br></label>
     <label>1 Gaj = <input type="number" id="gaj-squarefoot" value="9"> Square Foot<br></label>
+    <label>1 <select id="gaj-inr-unit">
+      <option value="Bigha">Bigha</option>
+      <option value="Nali">Nali</option>
+      <option value="Gaj">Gaj</option>
+      <option value="Square Foot">Square Foot</option>
+    </select> = <input type="number" id="gaj-inr" value="10000"> INR<br></label>
     <button onclick="resetConversionRates()">Reset</button>
   </div>
   <div>
@@ -48,38 +56,84 @@
       <option value="Nali">Nali</option>
       <option value="Gaj">Gaj</option>
       <option value="Square Foot">Square Foot</option>
+      <option value="INR">INR</option>
     </select>
     <button onclick="convertUnits()">Convert</button>
   </div>
   <div id="results"></div>
+  
+  
+  <!-- Share feature HTML code goes here -->
+  <div class="share-buttons">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://bhattah.github.io/indian-land-conversion-calculator/" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+    <a href="https://twitter.com/intent/tweet?url=https://bhattah.github.io/indian-land-conversion-calculator/" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://bhattah.github.io/indian-land-conversion-calculator/" target="_blank">
+      <i class="fa fa-linkedin"></i>
+    </a>
+  </div>
+  
+  <div class="share-email">
+    <input type="email" id="share-email-input" placeholder="Enter email address">
+    <button id="share-email-button">Share via Email</button>
+  </div>
+
+  <div class="share-clipboard">
+    <button id="copy-to-clipboard-button">Copy to Clipboard</button>
+  </div>
 
   <script>
     let conversionRates = {
       "Bigha": { "Nali": 10, "Gaj": 10*180, "Square Foot": 10*180*9 },
       "Nali": { "Bigha": 1/10, "Gaj": 180, "Square Foot": 180*9 },
       "Gaj": { "Bigha": 1/(10*180), "Nali": 1/180, "Square Foot": 9 },
-      "Square Foot": { "Bigha": 1/(10*180*9), "Nali": 1/(180*9), "Gaj": 1/9 }
+      "Square Foot": { "Bigha": 1/(10*180*9), "Nali": 1/(180*9), "Gaj": 1/9 },
+      "INR": { "Gaj": 1/10000 }
     };
-
+    
     function updateConversionRates() {
       const bighaNali = parseFloat(document.getElementById("bigha-nali").value);
       const naliGaj = parseFloat(document.getElementById("nali-gaj").value);
       const gajSquarefoot = parseFloat(document.getElementById("gaj-squarefoot").value);
+      const gajInrUnit = document.getElementById("gaj-inr-unit").value;
+      const gajInr = parseFloat(document.getElementById("gaj-inr").value);
       conversionRates = {
         "Bigha": { "Nali": bighaNali, "Gaj": bighaNali*naliGaj, "Square Foot": bighaNali*naliGaj*gajSquarefoot },
         "Nali": { "Bigha": 1/bighaNali, "Gaj": naliGaj, "Square Foot": naliGaj*gajSquarefoot },
         "Gaj": { "Bigha": 1/(bighaNali*naliGaj), "Nali": 1/naliGaj, "Square Foot": gajSquarefoot },
-        "Square Foot": { "Bigha": 1/(bighaNali*naliGaj*gajSquarefoot), "Nali": 1/(naliGaj*gajSquarefoot), "Gaj": 1/gajSquarefoot }
+        "Square Foot": { "Bigha": 1/(bighaNali*naliGaj*gajSquarefoot), "Nali": 1/(naliGaj*gajSquarefoot), "Gaj": 1/gajSquarefoot },
+        "INR": {}
       };
+      
+      if (gajInrUnit === "Gaj") {
+        conversionRates["Bigha"]["INR"] = bighaNali*naliGaj*gajInr;
+        conversionRates["Nali"]["INR"] = naliGaj*gajInr;
+        conversionRates["Gaj"]["INR"] = gajInr;
+        conversionRates["Square Foot"]["INR"] = gajInr / gajSquarefoot;
+      } else {
+        conversionRates["Bigha"]["INR"] = bighaNali*naliGaj*gajInr / conversionRates[gajInrUnit]["Gaj"];
+        conversionRates["Nali"]["INR"] = naliGaj*gajInr / conversionRates[gajInrUnit]["Gaj"];
+        conversionRates["Gaj"]["INR"] = gajInr / conversionRates[gajInrUnit]["Gaj"];
+        conversionRates["Square Foot"]["INR"] = gajInr / (conversionRates[gajInrUnit]["Gaj"] * gajSquarefoot);
+        conversionRates["INR"]["Bigha"] = 1/conversionRates["Bigha"]["INR"];
+        conversionRates["INR"]["Nali"] = 1/conversionRates["Nali"]["INR"];
+        conversionRates["INR"]["Gaj"] = 1/conversionRates["Gaj"]["INR"];
+        conversionRates["INR"]["Square Foot"] = 1/conversionRates["Square Foot"]["INR"];
+      }
     }
-
+    
     function resetConversionRates() {
       document.getElementById("bigha-nali").value = 10;
       document.getElementById("nali-gaj").value = 180;
       document.getElementById("gaj-squarefoot").value = 9;
+      document.getElementById("gaj-inr").value = 10000;
       updateConversionRates();
+      convertUnits();
     }
-
+    
     function convertUnits() {
       updateConversionRates();
       const inputValue = parseFloat(document.getElementById("inputValue").value);
@@ -88,15 +142,37 @@
       resultsDiv.innerHTML = "";
 
       for (const unit in conversionRates[inputUnit]) {
-        const convertedValue = inputValue * conversionRates[inputUnit][unit];
-        const resultElement = document.createElement("p");
-        resultElement.textContent = `${inputValue} ${inputUnit} = ${convertedValue.toFixed(7)} ${unit}`;
-        resultsDiv.appendChild(resultElement);
+        if (unit !== inputUnit) {
+          const convertedValue = inputValue * conversionRates[inputUnit][unit];
+          const resultElement = document.createElement("p");
+          resultElement.textContent = `${inputValue} ${inputUnit} = ${convertedValue.toFixed(7)} ${unit}`;
+          resultsDiv.appendChild(resultElement);
+        }
       }
     }
 
     // Initialize the page to convert 1 Bigha to the rest of the values
     convertUnits();
+    
+    // sharing
+    document.getElementById("share-email-button").addEventListener("click", function() {
+      const emailInput = document.getElementById("share-email-input");
+      const email = emailInput.value;
+      const subject = "Indian Land Converter Result";
+      const body = "Check out the Indian Land Converter result: " + document.getElementById("result").textContent;
+      const mailto = "mailto:" + email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      window.location.href = mailto;
+    });
+    
+    document.getElementById("copy-to-clipboard-button").addEventListener("click", async function() {
+      const result = document.getElementById("result").textContent;
+      try {
+        await navigator.clipboard.writeText(result);
+        alert("Copied to clipboard");
+      } catch (error) {
+        console.error("Error copying to clipboard:", error);
+      }
+    });
   </script>
 </body>
 </html>
