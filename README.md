@@ -1,1 +1,1 @@
-Land area conversion calculator in vernacular Indian units.
+Easily convert between Bigha, Nali, Gaj, Square Foot, and INR using custom values. Perfect for Indian land area units and price calculations, with mobile-friendly design and instant results.

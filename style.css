@@ -1,0 +1,248 @@
+html { box-sizing: border-box; }
+*, *:before, *:after { box-sizing: inherit; }
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  background: #f8f9fa;
+  color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+main {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 24px 16px 32px 16px;
+  margin-top: 24px;
+}
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5em;
+}
+h2 {
+  font-size: 1.1rem;
+  margin: 1.2em 0 0.5em 0;
+}
+form, .conversion-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1em;
+  margin-bottom: 0.2em;
+}
+input[type="number"], select {
+  padding: 7px 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 120px;
+  margin-left: 8px;
+}
+button {
+  padding: 12px 22px; /* relaxed horizontal padding */
+  font-size: 1em;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+/* Relax padding for share-email and result-actions buttons */
+.share-email button {
+  padding: 10px 20px;
+  margin: 0 2px;
+  min-width: 120px;
+}
+.result-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 0.7em;
+  justify-content: flex-start;
+}
+.result-actions button {
+  margin-top: 0;
+  padding: 10px 20px;
+  min-width: 120px;
+}
+button:active, button:focus {
+  background: #388e3c;
+  outline: none;
+}
+#results {
+  margin-top: 1.5em;
+  text-align: left;
+  font-size: 1.1em;
+  background: #f1f8e9;
+  border-radius: 8px;
+  padding: 1em;
+  min-height: 2em;
+}
+.share-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin: 1.5em 0 0.5em 0;
+}
+.share-buttons a {
+  color: #444;
+  font-size: 1.6em;
+  transition: color 0.2s;
+}
+.share-buttons a:hover {
+  color: #4CAF50;
+}
+.share-email, .share-clipboard {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 0.5em 0;
+}
+.share-email input[type="email"] {
+  width: 180px;
+  padding: 7px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+.custom-rates-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 1em;
+}
+.custom-rate-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+  justify-content: flex-start;
+}
+.custom-rate-row label {
+  min-width: 70px;
+  margin-bottom: 0;
+  justify-content: flex-end;
+  text-align: right;
+}
+.custom-rate-row input[type="number"] {
+  width: 120px; /* 1.5x longer than before (80px * 1.5) */
+  margin: 0;
+}
+.custom-rate-row select {
+  width: 135px; /* 1.5x longer than before (90px * 1.5) */
+  margin: 0;
+}
+.custom-rate-row .unit-label {
+  min-width: 70px;
+  text-align: left;
+  color: #555;
+  font-size: 0.98em;
+}
+.custom-rate-row .equal-sign {
+  min-width: 18px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1em;
+  display: inline-block;
+}
+.conversion-inputs.convert-row {
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.conversion-inputs.convert-row input[type="number"] {
+  width: 120px;
+  flex: 0 0 120px;
+}
+.conversion-inputs.convert-row select {
+  width: 135px;
+  flex: 0 0 135px;
+}
+.conversion-inputs.convert-row button {
+  width: 100%;
+  margin-top: 10px;
+  flex: unset;
+  align-self: flex-start;
+}
+.conversion-inputs.convert-row {
+  flex-wrap: wrap;
+}
+.result-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 0.7em;
+  justify-content: flex-start;
+}
+.result-actions button {
+  margin-top: 0;
+  padding: 10px 20px;
+  min-width: 120px;
+}
+@media (max-width: 600px) {
+  main {
+    padding: 10px 2px 18px 2px;
+    margin-top: 8px;
+  }
+  h1 { font-size: 1.3rem; }
+  #results { font-size: 1em; }
+  .share-buttons a { font-size: 1.2em; }
+  .custom-rate-row label, .custom-rate-row .unit-label {
+    min-width: 48px;
+    font-size: 0.97em;
+  }
+  .custom-rate-row input[type="number"] {
+    width: 90px;
+    font-size: 0.97em;
+  }
+  .custom-rate-row select {
+    width: 100px;
+    font-size: 0.97em;
+  }
+  .conversion-inputs.convert-row input[type="number"] {
+    width: 90px;
+    flex: 0 0 90px;
+  }
+  .conversion-inputs.convert-row select {
+    width: 100px;
+    flex: 0 0 100px;
+  }
+  .result-actions {
+    gap: 8px;
+  }
+  .result-actions button {
+    min-width: 90px;
+    padding: 9px 12px;
+    font-size: 0.97em;
+  }
+}
+@media print {
+  body, main {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+  #results {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .share-section, .custom-rates-form, #error-message, #toggle-dark-btn, #print-btn, #export-csv-btn, #analytics-optin, #region-preset {
+    display: none !important;
+  }
+}

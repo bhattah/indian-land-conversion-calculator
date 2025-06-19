@@ -1,91 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Indian Land Converter</title>
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Indian Land Converter | Bigha, Nali, Gaj, Square Foot, INR</title>
+  <meta name="description" content="Convert between Bigha, Nali, Gaj, Square Foot, and INR with custom rates. Fast, mobile-friendly Indian land area calculator.">
+  <link rel="canonical" href="https://bhattah.github.io/indian-land-conversion-calculator/">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bhattah.github.io/indian-land-conversion-calculator/">
+  <meta property="og:title" content="Indian Land Converter">
+  <meta property="og:description" content="Convert between Bigha, Nali, Gaj, Square Foot, and INR with custom rates. Fast, mobile-friendly Indian land area calculator.">
+  <meta property="og:image" content="https://bhattah.github.io/indian-land-conversion-calculator/og-image.png">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Indian Land Converter">
+  <meta name="twitter:description" content="Convert between Bigha, Nali, Gaj, Square Foot, and INR with custom rates. Fast, mobile-friendly Indian land area calculator.">
+  <meta name="twitter:image" content="https://bhattah.github.io/indian-land-conversion-calculator/og-image.png">
+  <link rel="icon" type="image/png" href="https://bhattah.github.io/indian-land-conversion-calculator/favicon.png">
+  <link rel="apple-touch-icon" href="https://bhattah.github.io/indian-land-conversion-calculator/favicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js');
+      });
     }
-    input, select {
-      padding: 5px;
-      margin: 5px;
-      font-size: 16px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    /* Make it mobile-friendly */
-    @media only screen and (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
-      input, select, button {
-        font-size: 14px;
-      }
-    }
-  </style>
+  </script>
 </head>
 <body>
-  <h1>Indian Land Converter</h1>
-  <div>
-    <h2>Custom Conversion Rates:</h2>
-    <label>1 Bigha = <input type="number" id="bigha-nali" value="10"> Nali<br></label>
-    <label>1 Nali = <input type="number" id="nali-gaj" value="180"> Gaj<br></label>
-    <label>1 Gaj = <input type="number" id="gaj-squarefoot" value="9"> Square Foot<br></label>
-    <label>1 <select id="gaj-inr-unit">
-      <option value="Bigha">Bigha</option>
-      <option value="Nali">Nali</option>
-      <option value="Gaj">Gaj</option>
-      <option value="Square Foot">Square Foot</option>
-    </select> = <input type="number" id="gaj-inr" value="10000"> INR<br></label>
-    <button onclick="resetConversionRates()">Reset</button>
-  </div>
-  <div>
-    <input type="number" id="inputValue" value="1" placeholder="Enter value">
-    <select id="inputUnit">
-      <option value="Bigha" selected>Bigha</option>
-      <option value="Nali">Nali</option>
-      <option value="Gaj">Gaj</option>
-      <option value="Square Foot">Square Foot</option>
-      <option value="INR">INR</option>
-    </select>
-    <button onclick="convertUnits()">Convert</button>
-  </div>
-  <div id="results"></div>
-  
-  
-  <!-- Share feature HTML code goes here -->
-  <div class="share-buttons">
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https://bhattah.github.io/indian-land-conversion-calculator/" target="_blank">
-      <i class="fa fa-facebook"></i>
-    </a>
-    <a href="https://twitter.com/intent/tweet?url=https://bhattah.github.io/indian-land-conversion-calculator/" target="_blank">
-      <i class="fa fa-twitter"></i>
-    </a>
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://bhattah.github.io/indian-land-conversion-calculator/" target="_blank">
-      <i class="fa fa-linkedin"></i>
-    </a>
-  </div>
-  
-  <div class="share-email">
-    <input type="email" id="share-email-input" placeholder="Enter email address">
-    <button id="share-email-button">Share via Email</button>
-  </div>
-
-  <div class="share-clipboard">
-    <button id="copy-to-clipboard-button">Copy to Clipboard</button>
-  </div>
-
-  <script>
+  <div class="github-buttons" style="display:flex;gap:10px;justify-content:center;margin-bottom:1em;">
+      <a class="github-button" href="https://github.com/bhattah/indian-land-conversion-calculator" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star bhattah/indian-land-conversion-calculator on GitHub">Star</a>
+      <a class="github-button" href="https://github.com/bhattah/indian-land-conversion-calculator/issues" data-icon="octicon-issue-opened" data-size="large" aria-label="Issue bhattah/indian-land-conversion-calculator on GitHub">Issues</a>
+      <a class="github-button" href="https://github.com/sponsors/bhattah" data-icon="octicon-heart" data-size="large" aria-label="Sponsor bhattah on GitHub">Sponsor</a>
+    </div>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <main>
+    <h1 style="font-size:1.6rem;">Indian Land-Area Converter</h1>
+    <p style="margin-top:0.2em;margin-bottom:1.2em;font-size:1.08em;color:#444;">Easily convert between Bigha, Nali, Gaj, Square Foot, and INR using custom values. Perfect for Indian land area units and price calculations, with mobile-friendly design and instant results.</p>
+    <section aria-labelledby="custom-rates-heading">
+      <h2 id="custom-rates-heading">Custom Conversion Rates</h2>
+      <form id="rates-form" class="custom-rates-form" autocomplete="off" onsubmit="event.preventDefault(); updateConversionRates(); convertUnits();">
+        <div class="custom-rate-row">
+          <label for="bigha-nali">1 Bigha</label>
+          <span class="equal-sign">=</span>
+          <input type="number" id="bigha-nali" value="10" min="1" step="any" required aria-label="Bigha to Nali">
+          <span class="unit-label">Nali</span>
+        </div>
+        <div class="custom-rate-row">
+          <label for="nali-gaj">1 Nali</label>
+          <span class="equal-sign">=</span>
+          <input type="number" id="nali-gaj" value="180" min="1" step="any" required aria-label="Nali to Gaj">
+          <span class="unit-label">Gaj</span>
+        </div>
+        <div class="custom-rate-row">
+          <label for="gaj-squarefoot">1 Gaj</label>
+          <span class="equal-sign">=</span>
+          <input type="number" id="gaj-squarefoot" value="9" min="1" step="any" required aria-label="Gaj to Square Foot">
+          <span class="unit-label">Square Foot</span>
+        </div>
+        <div class="custom-rate-row">
+          <label for="gaj-inr">1</label>
+          <select id="gaj-inr-unit" aria-label="Unit for INR" style="margin-left:0;">
+            <option value="Bigha">Bigha</option>
+            <option value="Nali">Nali</option>
+            <option value="Gaj">Gaj</option>
+            <option value="Square Foot">Square Foot</option>
+          </select>
+          <span class="equal-sign">=</span>
+          <input type="number" id="gaj-inr" value="10000" min="1" step="any" required aria-label="Unit to INR">
+          <span class="unit-label">INR</span>
+        </div>
+        <button type="button" onclick="resetConversionRates()" aria-label="Reset conversion rates">Reset</button>
+      </form>
+    </section>
+    <section aria-labelledby="convert-heading">
+      <h2 id="convert-heading">Convert Land Area</h2>
+      <form class="conversion-inputs convert-row" id="convert-form" autocomplete="off" onsubmit="event.preventDefault(); convertUnits();">
+        <input type="number" id="inputValue" value="1" min="0" step="any" required aria-label="Input value" placeholder="Value">
+        <select id="inputUnit" aria-label="Input unit">
+          <option value="Bigha" selected>Bigha</option>
+          <option value="Nali">Nali</option>
+          <option value="Gaj">Gaj</option>
+          <option value="Square Foot">Square Foot</option>
+          <option value="INR">INR</option>
+        </select>
+        <button type="submit" aria-label="Convert">Convert</button>
+      </form>
+    </section>
+    <section aria-live="polite" aria-atomic="true">
+      <div id="results"></div>
+    </section>
+    <section class="share-section" aria-labelledby="share-heading">
+      <h2 id="share-heading" style="display:none;">Share</h2>
+      <div class="share-buttons" aria-label="Share on social media">
+        <a href="#" id="share-facebook" title="Share on Facebook" rel="noopener" aria-label="Share on Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" id="share-twitter" title="Share on Twitter" rel="noopener" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" id="share-linkedin" title="Share on LinkedIn" rel="noopener" aria-label="Share on LinkedIn"><i class="fab fa-linkedin"></i></a>
+      </div>
+      <div class="share-email">
+        <input type="email" id="share-email-input" placeholder="Enter email address" aria-label="Email address">
+        <button id="share-email-button" type="button" aria-label="Share via Email">Share via Email</button>
+      </div>
+    </section>
+    <div class="result-actions">
+      <button id="print-btn" aria-label="Print results">Print</button>
+      <button id="export-csv-btn" aria-label="Export results as CSV">Export CSV</button>
+    </div>
+    <label style="font-size:0.97em;margin-left:8px;display:block;margin-top:0.7em;">
+      <input type="checkbox" id="analytics-optin" aria-label="Opt-in to anonymous analytics"> Analytics
+    </label>
+  </main>
+  <script defer>
     let conversionRates = {
       "Bigha": { "Nali": 10, "Gaj": 10*180, "Square Foot": 10*180*9 },
       "Nali": { "Bigha": 1/10, "Gaj": 180, "Square Foot": 180*9 },
@@ -93,7 +122,7 @@
       "Square Foot": { "Bigha": 1/(10*180*9), "Nali": 1/(180*9), "Gaj": 1/9 },
       "INR": { "Gaj": 1/10000 }
     };
-    
+
     function updateConversionRates() {
       const bighaNali = parseFloat(document.getElementById("bigha-nali").value);
       const naliGaj = parseFloat(document.getElementById("nali-gaj").value);
@@ -107,7 +136,6 @@
         "Square Foot": { "Bigha": 1/(bighaNali*naliGaj*gajSquarefoot), "Nali": 1/(naliGaj*gajSquarefoot), "Gaj": 1/gajSquarefoot },
         "INR": {}
       };
-      
       if (gajInrUnit === "Gaj") {
         conversionRates["Bigha"]["INR"] = bighaNali*naliGaj*gajInr;
         conversionRates["Nali"]["INR"] = naliGaj*gajInr;
@@ -124,7 +152,7 @@
         conversionRates["INR"]["Square Foot"] = 1/conversionRates["Square Foot"]["INR"];
       }
     }
-    
+
     function resetConversionRates() {
       document.getElementById("bigha-nali").value = 10;
       document.getElementById("nali-gaj").value = 180;
@@ -133,45 +161,124 @@
       updateConversionRates();
       convertUnits();
     }
-    
+
     function convertUnits() {
       updateConversionRates();
       const inputValue = parseFloat(document.getElementById("inputValue").value);
       const inputUnit = document.getElementById("inputUnit").value;
       const resultsDiv = document.getElementById("results");
       resultsDiv.innerHTML = "";
+      let resultText = "";
 
-      for (const unit in conversionRates[inputUnit]) {
-        if (unit !== inputUnit) {
-          const convertedValue = inputValue * conversionRates[inputUnit][unit];
+      // INR to other units logic
+      if (inputUnit === "INR") {
+        // Ensure conversionRates[INR] has all units
+        if (!conversionRates["INR"]["Bigha"]) {
+          // Calculate reverse rates if not present
+          const bighaInr = conversionRates["Bigha"]["INR"];
+          const naliInr = conversionRates["Nali"]["INR"];
+          const gajInr = conversionRates["Gaj"]["INR"];
+          const sqftInr = conversionRates["Square Foot"]["INR"];
+          conversionRates["INR"]["Bigha"] = 1 / bighaInr;
+          conversionRates["INR"]["Nali"] = 1 / naliInr;
+          conversionRates["INR"]["Gaj"] = 1 / gajInr;
+          conversionRates["INR"]["Square Foot"] = 1 / sqftInr;
+        }
+        ["Bigha", "Nali", "Gaj", "Square Foot"].forEach(unit => {
+          const convertedValue = inputValue * conversionRates["INR"][unit];
           const resultElement = document.createElement("p");
-          resultElement.textContent = `${inputValue} ${inputUnit} = ${convertedValue.toFixed(7)} ${unit}`;
+          resultElement.textContent = `${inputValue} INR = ${convertedValue.toFixed(7)} ${unit}`;
           resultsDiv.appendChild(resultElement);
+          resultText += `${inputValue} INR = ${convertedValue.toFixed(7)} ${unit}\n`;
+        });
+      } else {
+        for (const unit in conversionRates[inputUnit]) {
+          if (unit !== inputUnit) {
+            const convertedValue = inputValue * conversionRates[inputUnit][unit];
+            const resultElement = document.createElement("p");
+            resultElement.textContent = `${inputValue} ${inputUnit} = ${convertedValue.toFixed(7)} ${unit}`;
+            resultsDiv.appendChild(resultElement);
+            resultText += `${inputValue} ${inputUnit} = ${convertedValue.toFixed(7)} ${unit}\n`;
+          }
         }
       }
+      // Store for sharing
+      resultsDiv.setAttribute('data-result', resultText.trim());
     }
 
     // Initialize the page to convert 1 Bigha to the rest of the values
     convertUnits();
-    
-    // sharing
+
+    // Social sharing handlers
+    function getShareText() {
+      const resultsDiv = document.getElementById('results');
+      const result = resultsDiv.getAttribute('data-result') || '';
+      return `Indian Land Converter Result:\n${result}\nTry it: https://bhattah.github.io/indian-land-conversion-calculator/`;
+    }
+    document.getElementById('share-facebook').onclick = function(e) {
+      e.preventDefault();
+      const url = encodeURIComponent('https://bhattah.github.io/indian-land-conversion-calculator/');
+      const text = encodeURIComponent(getShareText());
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`,'_blank','noopener');
+    };
+    document.getElementById('share-twitter').onclick = function(e) {
+      e.preventDefault();
+      const url = encodeURIComponent('https://bhattah.github.io/indian-land-conversion-calculator/');
+      const text = encodeURIComponent(getShareText());
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`,'_blank','noopener');
+    };
+    document.getElementById('share-linkedin').onclick = function(e) {
+      e.preventDefault();
+      const url = encodeURIComponent('https://bhattah.github.io/indian-land-conversion-calculator/');
+      const text = encodeURIComponent(getShareText());
+      window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&summary=${text}`,'_blank','noopener');
+    };
+
+    // Email sharing
     document.getElementById("share-email-button").addEventListener("click", function() {
       const emailInput = document.getElementById("share-email-input");
       const email = emailInput.value;
       const subject = "Indian Land Converter Result";
-      const body = "Check out the Indian Land Converter result: " + document.getElementById("result").textContent;
+      const body = getShareText();
       const mailto = "mailto:" + email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
       window.location.href = mailto;
     });
-    
-    document.getElementById("copy-to-clipboard-button").addEventListener("click", async function() {
-      const result = document.getElementById("result").textContent;
-      try {
-        await navigator.clipboard.writeText(result);
-        alert("Copied to clipboard");
-      } catch (error) {
-        console.error("Error copying to clipboard:", error);
+
+    document.getElementById('print-btn').onclick = function() {
+      window.print();
+    };
+    document.getElementById('export-csv-btn').onclick = function() {
+      const resultsDiv = document.getElementById('results');
+      let csv = 'Conversion Result\n';
+      resultsDiv.querySelectorAll('p').forEach(p => {
+        csv += p.textContent + '\n';
+      });
+      const blob = new Blob([csv], {type:'text/csv'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'land-conversion.csv';
+      a.click();
+    };
+
+    // Analytics opt-in logic
+    document.getElementById('analytics-optin').checked = localStorage.getItem('landconv-analytics') === 'true';
+    document.getElementById('analytics-optin').onchange = function() {
+      localStorage.setItem('landconv-analytics', this.checked);
+    };
+    // Track conversions locally if opted in
+    function trackAnalytics(inputUnit) {
+      if (localStorage.getItem('landconv-analytics') === 'true') {
+        let stats = JSON.parse(localStorage.getItem('landconv-stats')||'{}');
+        stats[inputUnit] = (stats[inputUnit]||0)+1;
+        localStorage.setItem('landconv-stats', JSON.stringify(stats));
       }
+    }
+
+    // Accessibility: focus on results after conversion
+    document.getElementById('convert-form').addEventListener('submit', function() {
+      setTimeout(() => {
+        document.getElementById('results').focus && document.getElementById('results').focus();
+      }, 100);
     });
   </script>
 </body>
